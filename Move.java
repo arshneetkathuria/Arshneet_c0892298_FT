@@ -13,7 +13,42 @@ class SingleObject {
     }
 }
 
+class Box {
+    private List<Object> contents;
+    private int boxNumber;
 
+    public Box(int capacity, int boxNumber) {
+        contents = new ArrayList<>(capacity);
+        this.boxNumber = boxNumber;
+    }
+
+    public void addItem(Object item) {
+        contents.add(item);
+    }
+
+    public void displayContents() {
+        for (Object item : contents) {
+            if (item instanceof SingleObject) {
+                System.out.println(((SingleObject) item).getName());
+            } else if (item instanceof Box) {
+                ((Box) item).displayContents();
+            }
+        }
+    }
+
+    public int find(String objectName) {
+        for (Object item : contents) {
+            if (item instanceof SingleObject && ((SingleObject) item).getName().equals(objectName)) {
+                return boxNumber;  // Return the current box number if the object is found
+            } else if (item instanceof Box) {
+                int result = ((Box) item).find(objectName);
+                if (result > 0) {
+                    return boxNumber;  // Return the current box number, not the inner box number
+                }
+            }
+        }
+        return -boxNumber;  // Return negative number only if the object is not found in the current box
+    }}
 
 public class Move {
 
