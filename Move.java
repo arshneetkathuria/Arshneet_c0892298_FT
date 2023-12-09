@@ -4,11 +4,11 @@ import java.util.List;
 class SingleObject {
     private String objectName;
 
-    public SingleObject(String objectName) {
+    public SingleObject(String objectName) {  //creates single object
         this.objectName = objectName;
     }
 
-    public String getName() {
+    public String getName() {    //gets the name of object
         return objectName;
     }
 }
@@ -17,16 +17,16 @@ class Box {
     private List<Object> contents;
     private int boxNumber;
 
-    public Box(int capacity, int boxNumber) {
+    public Box(int capacity, int boxNumber) {  //creates a box with capacity and box number
         contents = new ArrayList<>(capacity);
         this.boxNumber = boxNumber;
     }
 
-    public void addItem(Object item) {
+    public void addItem(Object item) {  //adds item to the content array
         contents.add(item);
     }
 
-    public void displayContents() {
+    public void displayContents() {  //Displays the content of the box
         for (Object item : contents) {
             if (item instanceof SingleObject) {
                 System.out.println(((SingleObject) item).getName());
@@ -36,39 +36,39 @@ class Box {
         }
     }
 
-    public int find(String objectName) {
+    public int find(String objectName) { //returns the outermost box number
         for (Object item : contents) {
             if (item instanceof SingleObject && ((SingleObject) item).getName().equals(objectName)) {
-                return boxNumber;  // Return the current box number if the object is found
+                return boxNumber;
             } else if (item instanceof Box) {
                 int result = ((Box) item).find(objectName);
                 if (result > 0) {
-                    return boxNumber;  // Return the current box number, not the inner box number
+                    return boxNumber;
                 }
             }
         }
-        return -boxNumber;  // Return negative number only if the object is not found in the current box
+        return -boxNumber;  // Return negative number if the object is not found in the current box
     }}
 
 public class Move {
     private List<Box> boxes;
 
-    public Move(int capacity) {
+    public Move(int capacity) { //creates an array with the capacity
         boxes = new ArrayList<>(capacity);
     }
 
-    public void addBox(Box box) {
+    public void addBox(Box box) { //adds the box to the moving boxes array
         boxes.add(box);
     }
 
-    public void displayContents() {
+    public void displayContents() { // display the content of the moving boxes array
         System.out.println("The objects of my move are:");
         for (Box box : boxes) {
             box.displayContents();
         }
     }
 
-    public int find(String objectName) {
+    public int find(String objectName) { // finds the object in the outermost box
         for (Box box : boxes) {
             int result = box.find(objectName);
             if (result > 0) {
