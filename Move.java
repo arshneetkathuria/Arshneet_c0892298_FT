@@ -51,7 +51,32 @@ class Box {
     }}
 
 public class Move {
+    private List<Box> boxes;
 
+    public Move(int capacity) {
+        boxes = new ArrayList<>(capacity);
+    }
+
+    public void addBox(Box box) {
+        boxes.add(box);
+    }
+
+    public void displayContents() {
+        System.out.println("The objects of my move are:");
+        for (Box box : boxes) {
+            box.displayContents();
+        }
+    }
+
+    public int find(String objectName) {
+        for (Box box : boxes) {
+            int result = box.find(objectName);
+            if (result > 0) {
+                return result;
+            }
+        }
+        return -1;
+    }
 
     public static void main(String[] args) {
         Move move = new Move(2);
